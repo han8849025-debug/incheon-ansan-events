@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인천·안산 행사판</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F2F5F4; --card:#FFFFFF; --card2:#FAFBFB;
+  --ink:#12201E; --ink2:#3A4A47; --muted:#667874; --line:#D7E0DD;
+  --incheon:#0E7A86; --incheon-bg:#E2F1F2;
+  --ansan:#AB4E1B; --ansan-bg:#F7E9DF;
+  --free:#146F4A; --free-bg:#DFF0E6;
+  --warn:#8A6410; --warn-bg:#F6EBD3;
+  --hot:#9C2F2F; --hot-bg:#F6E2E1;
+  --grey-bg:#E8EDEC;
+  --focus:#0E7A86;
+  --shadow:0 1px 2px rgba(18,32,30,.05),0 6px 18px rgba(18,32,30,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1513; --card:#151F1D; --card2:#1A2523;
+    --ink:#E6EEEB; --ink2:#B6C5C1; --muted:#879995; --line:#26332F;
+    --incheon:#4FC3CD; --incheon-bg:#10312F;
+    --ansan:#E89A63; --ansan-bg:#332115;
+    --free:#5FCB93; --free-bg:#0F2C20;
+    --warn:#E0B75F; --warn-bg:#2E2513;
+    --hot:#EE8C87; --hot-bg:#331B1A;
+    --grey-bg:#1F2A28;
+    --focus:#4FC3CD;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1513; --card:#151F1D; --card2:#1A2523;
+  --ink:#E6EEEB; --ink2:#B6C5C1; --muted:#879995; --line:#26332F;
+  --incheon:#4FC3CD; --incheon-bg:#10312F;
+  --ansan:#E89A63; --ansan-bg:#332115;
+  --free:#5FCB93; --free-bg:#0F2C20;
+  --warn:#E0B75F; --warn-bg:#2E2513;
+  --hot:#EE8C87; --hot-bg:#331B1A;
+  --grey-bg:#1F2A28;
+  --focus:#4FC3CD;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.6;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 18px 72px}
+
+/* ---- header ---- */
+header{padding:38px 0 22px}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 10px
+}
+h1{
+  font-family:"Hahmlet","Nanum Myeongjo",serif; font-weight:700;
+  font-size:clamp(30px,6vw,44px); line-height:1.15; margin:0 0 10px;
+  letter-spacing:-.01em; text-wrap:balance;
+}
+.lede{margin:0;color:var(--ink2);max-width:60ch}
+.lede b{color:var(--ink);font-weight:600}
+
+/* ---- stat strip ---- */
+.stats{
+  display:flex;flex-wrap:wrap;gap:0;margin:22px 0 0;
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)
+}
+.stat{flex:1 1 116px;padding:12px 14px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:21px;
+  font-variant-numeric:tabular-nums;display:block;line-height:1.2}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+.stat.free .n{color:var(--free)}
+.stat.ic .n{color:var(--incheon)}
+.stat.an .n{color:var(--ansan)}
+
+/* ---- toolbar ---- */
+.bar{
+  position:sticky;top:0;z-index:20;background:var(--paper);
+  padding:14px 0 12px;margin-top:24px;border-bottom:1px solid var(--line)
+}
+.searchrow{display:flex;gap:8px;align-items:center}
+input[type=search]{
+  flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:9px;padding:9px 12px
+}
+input[type=search]::placeholder{color:var(--muted)}
+select{
+  font:inherit;font-size:13.5px;color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:9px;padding:9px 10px
+}
+:is(input,select,button,a):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;align-items:center}
+.chips .lbl{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-right:2px
+}
+.chip{
+  font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--line);
+  background:var(--card);color:var(--ink2);border-radius:99px;padding:5px 11px;
+  transition:background .12s,border-color .12s,color .12s
+}
+.chip:hover{border-color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip.free[aria-pressed="true"]{background:var(--free);border-color:var(--free);color:#fff}
+.chip.ic[aria-pressed="true"]{background:var(--incheon);border-color:var(--incheon);color:#fff}
+.chip.an[aria-pressed="true"]{background:var(--ansan);border-color:var(--ansan);color:#fff}
+.count{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;
+  color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---- list ---- */
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.grouphead{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin:22px 0 2px;
+  display:flex;align-items:center;gap:10px
+}
+.grouphead::after{content:"";flex:1;height:1px;background:var(--line)}
+.row{
+  display:grid;grid-template-columns:78px 1fr auto;gap:14px;align-items:start;
+  background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:14px 15px;box-shadow:var(--shadow);
+  border-left:3px solid var(--line);
+}
+.row.ic{border-left-color:var(--incheon)}
+.row.an{border-left-color:var(--ansan)}
+.when{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;line-height:1.35}
+.when .md{font-size:15px;font-weight:600;display:block}
+.when .yr{font-size:11px;color:var(--muted);display:block}
+.when .dday{
+  display:inline-block;margin-top:5px;font-size:10.5px;font-weight:600;
+  padding:1px 6px;border-radius:5px;background:var(--grey-bg);color:var(--muted)
+}
+.when .dday.soon{background:var(--hot-bg);color:var(--hot)}
+.when .dday.now{background:var(--free-bg);color:var(--free)}
+.main .t{margin:0 0 4px;font-size:15.5px;font-weight:600;line-height:1.4}
+.main .t a{color:inherit;text-decoration:none;background-image:linear-gradient(var(--line),var(--line));
+  background-size:100% 1px;background-position:0 100%;background-repeat:no-repeat}
+.main .t a:hover{color:var(--incheon);background-image:linear-gradient(currentColor,currentColor)}
+.meta{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 9px}
+.meta .city{font-weight:600}
+.meta .city.ic{color:var(--incheon)}
+.meta .city.an{color:var(--ansan)}
+.price{text-align:right;min-width:92px}
+.tag{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:13px;font-variant-numeric:tabular-nums;padding:4px 9px;border-radius:7px;
+  background:var(--grey-bg);color:var(--ink2);white-space:nowrap
+}
+.tag.b0{background:var(--free-bg);color:var(--free)}
+.tag.b1{background:var(--incheon-bg);color:var(--incheon)}
+.tag.b2{background:var(--warn-bg);color:var(--warn)}
+.tag.b3{background:var(--hot-bg);color:var(--hot)}
+.sub{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
+.status{display:inline-block;font-size:10.5px;padding:1px 6px;border-radius:5px;
+  margin-top:5px;background:var(--grey-bg);color:var(--muted)}
+.status.open{background:var(--free-bg);color:var(--free)}
+.empty{padding:44px 4px;color:var(--muted);text-align:center}
+
+/* ---- footer ---- */
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--muted)}
+footer a{color:var(--incheon)}
+footer h2{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:500}
+footer ul{margin:0 0 16px;padding-left:17px}
+footer li{margin-bottom:3px}
+
+@media (max-width:600px){
+  .row{grid-template-columns:62px 1fr;gap:11px}
+  .price{grid-column:2;text-align:left;margin-top:2px}
+  .stat{flex:1 1 33%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow" id="stamp"></p>
+  <h1>인천·안산 행사판</h1>
+  <p class="lede">지금 신청하거나 보러 갈 수 있는 행사만 모았어. <b>참가비 기준</b>으로 갈라놨고, 이미 끝난 건 빠져 있어.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="bar">
+  <div class="searchrow">
+    <input type="search" id="q" placeholder="행사 이름 · 장소로 찾기" aria-label="검색">
+    <select id="sort" aria-label="정렬">
+      <option value="end">마감 임박순</option>
+      <option value="start">시작 빠른순</option>
+      <option value="cheap">싼 순</option>
+      <option value="price">비싼 순</option>
+    </select>
+  </div>
+  <div class="chips" id="cityChips"><span class="lbl">지역</span></div>
+  <div class="chips" id="priceChips"><span class="lbl">참가비</span></div>
+  <div class="chips" id="kindChips"><span class="lbl">종류</span><span class="count" id="count"></span></div>
+</div>
+
+<ul class="list" id="list"></ul>
+
+<footer>
+  <h2>어디서 긁어왔나</h2>
+  <ul>
+    <li><a href="https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/list.do?key=m2501152621396" target="_blank" rel="noopener">인천문화포털 IQ — 문화행사</a></li>
+    <li><a href="https://www.ansanart.com/lay2/program/S1T10C334/show/intro.do" target="_blank" rel="noopener">안산문화재단 — 공연안내</a></li>
+    <li><a href="https://www.ansanart.com/lay1/program/S1T200C28/exhibit/intro.do" target="_blank" rel="noopener">안산문화재단 — 기획전시</a></li>
+    <li><a href="https://www.ansanart.com/lay2/program/S1T32C336/np_edu/intro.do" target="_blank" rel="noopener">안산문화재단 — 교육/행사</a></li>
+  </ul>
+  <h2>읽는 법</h2>
+  <ul>
+    <li>가격은 <b>정가</b> 기준으로 분류했어. 할인가가 따로 있으면 밑에 작게 적어놨어.</li>
+    <li>“확인필요”는 원본에 값이 안 적힌 것들이야. 대부분 무료 전시지만 제목을 눌러서 확인해.</li>
+    <li>이 페이지는 <b>6시간마다 자동으로</b> 다시 긁어. 맨 위 시각이 마지막으로 확인한 때야.</li>
+    <li>PC에서 지금 당장 새로 긁고 싶으면 <b>행사찾기.bat</b> 을 실행하면 돼.</li>
+  </ul>
+</footer>
+</div>
+
+<script id="data" type="application/json">{"generated": "2026-08-30 21:12", "today": "2026-08-30", "items": [{"city": "인천", "title": "인천국악회관 제94기 국악문화학교 수강생 모집", "kind": "교육/체험", "cat": "교육", "place": "인천국악회관", "start": "2026-06-15", "end": "2026-08-31", "time": "", "age": "6세 이상", "host": "인천국악회관", "tel": "032-876-8364", "price_won": null, "price_min": null, "price_raw": "유료 (개별문의)", "bucket": "확인필요", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13649", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "블루버드의 팔레트", "kind": "전시", "cat": "회화", "place": "오솔갤러리", "start": "2026-07-07", "end": "2026-08-31", "time": "평일( 1회:11:00~19:00 ) , 주말/공휴일( 1회:11:00~19:00 ) , 매주 화요일 휴무, 7/20~24휴무", "age": "5세 이상", "host": "인천광역시, 인천문화재단", "tel": "032-466-2959", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13718", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "제6회김인숙개인전", "kind": "전시", "cat": "회화", "place": "강화미술관", "start": "2026-08-26", "end": "2026-09-01", "time": "", "age": "6세 이상", "host": "김인숙", "tel": "010 9012 1585", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13795", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "결핍의 미학 (Aesthetics of Deficit/Absence)", "kind": "전시", "cat": "사진", "place": "인천광역시교육청평생학습관 갤러리나무", "start": "2026-08-21", "end": "2026-09-03", "time": "평일( 1회:10:00~18:00 ) , 주말/공휴일( 1회:10:00~18:00 ) , 일요일, 공휴일 휴관", "age": "0세 이상", "host": "인천광역시교육청평생학습관", "tel": "문화예술팀 032-899-1516", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13761", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 수봉IN기획전시 《공존, 위드 홈(With Home)》", "kind": "전시", "cat": "복합", "place": "인천수봉문화회관", "start": "2026-09-01", "end": "2026-09-05", "time": "평일( 1회:10:30~17:00 ) , 주말/공휴일( 1회:10:30~17:00 )", "age": "0세 이상", "host": "인천수봉문화회관", "tel": "인천수봉문화회관 032-868-7196", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13780", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "드라마 [정년이]x[취사병 전설이 되다] 원작 웹툰 작가와의 토크콘서트", "kind": "행사/축제", "cat": "문화행사", "place": "틈 문화창작지대", "start": "2026-09-05", "end": "2026-09-05", "time": "주말/공휴일( 1회:14:00~16:00 ) , 13:10 부터 입장 시작", "age": "0세 이상", "host": "인천콘텐츠코리아랩", "tel": "010-9094-5670 / incklab2026@gmail.com", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13787", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "ASAC 오픈클래스. 오후 세 시의 비엔나 (2부. 100년 전 빈, 새로운 예술이 태어나다)", "kind": "공연", "cat": "기획공연", "place": "별무리극장", "start": "2026-09-05", "end": "2026-09-05", "time": "", "age": "8세 이상 관람가능", "host": "안산문화재단", "tel": "080-481-4000", "price_won": 10000, "price_min": 10000, "price_raw": "1만원", "bucket": "1만원 이하", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=40", "source": "안산문화재단", "status": ""}, {"city": "안산", "title": "2026 국립현대미술관 미술은행 소장품전 <단원의 정원에서>", "kind": "전시", "cat": "기획전시", "place": "김홍도미술관 1관", "start": "2026-07-14", "end": "2026-09-06", "time": "", "age": "", "host": "안산문화재단", "tel": "031-481-0504", "price_won": null, "price_min": null, "price_raw": "관람료 확인 필요", "bucket": "확인필요", "url": "https://www.ansanart.com/lay1/program/S1T200C28/exhibit/intro.do", "source": "안산문화재단", "status": ""}, {"city": "안산", "title": "PLOSIVE 파열음", "kind": "전시", "cat": "기획전시", "place": "김홍도미술관 2관", "start": "2026-08-18", "end": "2026-09-06", "time": "", "age": "", "host": "안산문화재단", "tel": "031-481-0505", "price_won": null, "price_min": null, "price_raw": "관람료 확인 필요", "bucket": "확인필요", "url": "https://www.ansanart.com/lay1/program/S1T200C28/exhibit/intro.do", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "제14회강화전국국악경연대회", "kind": "기타", "cat": "기타", "place": "강화문예회관", "start": "2026-09-06", "end": "2026-09-06", "time": "주말/공휴일( 1회:09:00~18:00 )", "age": "13세 이상", "host": "강화군/(사)향두계놀이보존회", "tel": "정아트앤컴퍼니(주) (02) 564-0269", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13753", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "제1회 협연 콩쿠르 9월 7일 마감", "kind": "행사/축제", "cat": "대회", "place": "서울 클래식 공연홀에서 진행되는 실전 협연", "start": "2026-08-01", "end": "2026-09-07", "time": "", "age": "0세 이상", "host": "코리아 솔리스텐 챔버 Korea Solisten Chamber(K.S.C.)", "tel": "http://pf.kakao.com/_xdvUcb", "price_won": 80000, "price_min": 80000, "price_raw": "유료 (8만원)", "bucket": "3만원 초과", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13736", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "예술의전당 공연영상 무료 상영 <마술피리> (오페라)", "kind": "기타", "cat": "기타", "place": "문학시어터", "start": "2026-09-08", "end": "2026-09-08", "time": "평일( 1회:10:00~11:45 )", "age": "7세 이상", "host": "문학시어터, (사)인천예총, 인천광역시 / 예술의전당", "tel": "@munhak_theater (인스타그램)", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13793", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "개항장의 하루, 공연으로 완성되는 시간여행", "kind": "공연", "cat": "클래식", "place": "인천 개항장 일대 및 복합문화공간 화안", "start": "2026-09-02", "end": "2026-09-09", "time": "평일( 1회:13:30~16:00 , 2회:13:30~16:00 ) , 주말/공휴일( 1회:16:00~18:30 ) , 평일 : 9.2(수),9.9(수) 주말 :9.5(토)", "age": "8세 이상", "host": "복합문화공간 화안", "tel": "032-834-1055", "price_won": 30000, "price_min": 10000, "price_raw": "유료 (A코스: 참가비 3만원(근대의상입고 e지버스투어, 공연은 무료관람) B코스: 참가비 1만원 (전문해설과와 함께하는 뚜벅이 투어, 공연은 무료관람)- 1만원 추가시 근대의상 체험가능 *매회차 선착순 신청자 10명 선물 증정 )", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13749", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "14인 블루버드의 팔레트", "kind": "전시", "cat": "회화", "place": "KMJ ART GALLERY", "start": "2026-09-05", "end": "2026-09-10", "time": "평일( 1회:11:00~18:00 ) , 주말/공휴일( 1회:11:00~18:00 )", "age": "5세 이상", "host": "블루버드 아트, 후원 : 인천광역시, 인천문화재단", "tel": "032-721-5187", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13773", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "<당신의 마음에 노래를 >", "kind": "공연", "cat": "뮤지컬", "place": "인천광역시교육청 평생학습관 교육누리홀", "start": "2026-09-10", "end": "2026-09-10", "time": "평일( 1회:19:00~20:30 )", "age": "8세 이상", "host": "인천광역시교육청평생학습관", "tel": "032-899-1517", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13792", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "ASAC 키움극장 판소리 동화콘서트 '자라는 자라'", "kind": "공연", "cat": "기획공연", "place": "달맞이극장", "start": "2026-09-10", "end": "2026-09-11", "time": "", "age": "5세 이상 관람가능", "host": "안산문화재단", "tel": "고객지원센터 080-481-4000", "price_won": 30000, "price_min": 30000, "price_raw": "전석3만원", "bucket": "1~3만원", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=24", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "연극 <26일의 크리스마스>", "kind": "공연", "cat": "연극", "place": "학산소극장", "start": "2026-09-11", "end": "2026-09-11", "time": "평일( 1회:19:30~21:30 )", "age": "12세 이상", "host": "인천문화재단, 인천광역시, 미추홀학산문화원, 배우공통체 자투리, 극다 배우들", "tel": "010-9753-7129", "price_won": 20000, "price_min": 20000, "price_raw": "유료 (전석 20,000원 (자유석))", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13788", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "연극 <낡은 우산>", "kind": "공연", "cat": "대관공연", "place": "보노마루", "start": "2026-09-11", "end": "2026-09-12", "time": "", "age": "* 본 공연은 만 8세 이상(2018년 포함 이전 출생자) 관람 가능합니다. 만 8세 미만의 관객은 티켓 소", "host": "안산문화재단", "tel": "010-3867-1861", "price_won": 20000, "price_min": 20000, "price_raw": "전석 20,000원", "bucket": "1~3만원", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=57", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "[옹진군] 2026 섬마을밴드 음악축제", "kind": "행사/축제", "cat": "축제", "place": "대이작도 해양생태관", "start": "2026-09-12", "end": "2026-09-12", "time": "", "age": "0세 이상", "host": "옹진군", "tel": "032-468-5432 (운영사)", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13764", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[수봉IN기획공연] 뮤직 판타지아 : 수봉산의 잃어버힌 황금 악보를 찾아라!", "kind": "공연", "cat": "클래식", "place": "인천수봉문화회관", "start": "2026-09-12", "end": "2026-09-12", "time": "주말/공휴일( 1회:15:00~: )", "age": "0세 이상", "host": "인천수봉문화회관", "tel": "인천수봉문화회관 032-868-7196", "price_won": 20000, "price_min": 20000, "price_raw": "유료 (★좌석은 전석 20,000원입니다. - 수봉문화회관 관극회원 50%. (할인은 수봉문화회관 홈페이지 가입 시에만 제공되며, 현장에서 관극회원 여부 확인합니다.) ★현장 판매 티켓은 당일 입장 가능한 티켓에 한하여 판매됩니다.)", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13785", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "관객 참여형 연극 <출항>", "kind": "공연", "cat": "연극", "place": "이음1977", "start": "2026-09-11", "end": "2026-09-13", "time": "평일( 1회:13:00~14:05 , 2회:15:00~16:05 , 3회:17:00~18:05 ) , 주말/공휴일( 1회:11:00~12:05 , 2회:14:00~15:05 , 3회:16:00~17:05 , 4회:18:00~19:05 ) , 일요일은 평일 기준으로 운영", "age": "19세 이상", "host": "인천광역시/올라아트컴퍼니", "tel": "0507-1390-9896", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13791", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "예술의전당 공연영상 무료 상영 <인형의 집>(연극)", "kind": "기타", "cat": "기타", "place": "문학시어터", "start": "2026-09-15", "end": "2026-09-15", "time": "평일( 1회:10:00~12:15 )", "age": "8세 이상", "host": "문학시어터, (사)인천예총, 인천광역시 / 예술의전당", "tel": "@munhak_theater (인스타그램)", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13794", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "전통줄타기x연극 <LINE-두줄광대>", "kind": "공연", "cat": "국악/판소리", "place": "동구문화체육센터 공연장", "start": "2026-09-17", "end": "2026-09-17", "time": "평일( 1회:19:30~20:30 )", "age": "6세 이상", "host": "임종희", "tel": "010-5415-4441", "price_won": 30000, "price_min": 6000, "price_raw": "유료 (전석 30,000원 *인천광역시 거주민 80% 할인 6,000원 *실버, 장애인, 예술인패스 50% 할인 15,000원 *문화나눔 무료 초대 문의 (보육시설, 장애인시설, 돌봄시설 등) 010.5415.4441로 연락주세요.)", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13783", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026년 9월 재직자 대상 무료 디자인교육 안내", "kind": "교육/체험", "cat": "교육", "place": "인천종합비즈니스센터 2층 디자인교육센터", "start": "2026-09-09", "end": "2026-09-19", "time": "평일( 1회:10:00~17:00 , 2회:10:00~17:00 ) , 주말/공휴일( 1회:10:00~17:00 ) , 각 과정 별 교육시간 상이하므로 상세 내용은 홈페이지를 참조하여 주시기 바랍니다.", "age": "0세 이상", "host": "인천테크노파크", "tel": "인천디자인교육센터(032-260-0213)", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13777", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "연극 <벚꽃동산>", "kind": "공연", "cat": "연극", "place": "문학시어터", "start": "2026-09-18", "end": "2026-09-19", "time": "평일( 1회:19:30~21:10 ) , 주말/공휴일( 1회:17:00~18:40 ) , 금 19시 30분 / 토 17시", "age": "13세 이상", "host": "(재)예술경영지원센터 / 인천광역시, (사)인천예총, 문학시어터", "tel": "032-433-3777", "price_won": 20000, "price_min": 10000, "price_raw": "유료 (일반 20,000원 문학시어터 회원 15,000원 학생 10,000원 군,경,소방관 10,000원 복지할인 (장애) 10,000원)", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13779", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "바로 그 바로크", "kind": "공연", "cat": "클래식", "place": "인천학생교육문화회관 싸리재홀(대공연장)", "start": "2026-09-19", "end": "2026-09-19", "time": "평일( 1회:14:00~15:20 ) , 주말/공휴일( 1회:14:00~15:15 )", "age": "7세 이상", "host": "인천광역시교육청학생교육문화회관", "tel": "032-760-3532", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13747", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 시민창작예술축제 - 제13회 학산마당극놀래", "kind": "행사/축제", "cat": "축제", "place": "수봉공원 인공폭포 야외공연장", "start": "2026-09-19", "end": "2026-09-19", "time": "주말/공휴일( 1회:17:00~20:30 ) , 체험 운영 15:30 부터", "age": "0세 이상", "host": "미추홀학산문화원", "tel": "032-866-3994", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13765", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "Leaves Leave_김순임_2026 공간 듬_집_네번째 전시", "kind": "전시", "cat": "설치", "place": "공간 듬", "start": "2026-08-29", "end": "2026-09-20", "time": "", "age": "7세 이상", "host": "공간 듬", "tel": "daggdum@naver.com", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13790", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "인천시립극단 제98회 정기공연 연극 <배웅>", "kind": "공연", "cat": "연극", "place": "인천문화예술회관 소공연장", "start": "2026-09-12", "end": "2026-09-20", "time": "평일( 1회:14:00~15:30 , 2회:19:30~21:00 ) , 주말/공휴일( 1회:15:00~16:30 ) , * 화, 수 14시 / 목, 금 19시 30분 공연", "age": "8세 이상", "host": "주최 인천광역시 / 주관 인천문화예술회관 / 제작 인천시립극단", "tel": "032)420-2790", "price_won": 20000, "price_min": 20000, "price_raw": "유료 (전석 2만원 30% 할인 : 인천e음카드 소지자 40% 할인 : '인천시립극단' 카카오 채널 플러스 친구 추가 50% 할인 : 경로할인 등 )", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13771", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 송도 트라이보울 재즈 페스티벌", "kind": "행사/축제", "cat": "페스티벌", "place": "트라이보울", "start": "2026-09-19", "end": "2026-09-20", "time": "", "age": "5세 이상", "host": "인천광역시경제자유구역청 인천문화재단 트라이보울", "tel": "032-833-5993", "price_won": 5000, "price_min": 5000, "price_raw": "무료 (▪ 모든 공연은 무료로 진행됩니다. 단, 트라이보울의 실내 공연장 𝗝𝗔𝗭𝗭 𝗛𝗔𝗟𝗟에서 진행되는 공연은 엔티켓(www.enticket.com)을 통해 예약 후 관람 가능합니다. ▪ 노쇼(No-show) 방지를 위해 예매보증금 5,000원을 결제하셔야합니다. 공연 관람 후 1주일 이내 엔티켓 예매시스템을 통해 전액 반환됩니다. ▪ 자세한 사항은 트라이보울 홈페이지를 통해 확인해 주세요.)", "bucket": "1만원 이하", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13758", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "두 개의 손, 하나의 시간", "kind": "전시", "cat": "복합", "place": "인천광역시교육청평생학습관 갤러리다솜", "start": "2026-08-21", "end": "2026-09-22", "time": "평일( 1회:10:~18:00 ) , 주말/공휴일( 1회:10:00~18:00 ) , 일요일, 공휴일 휴관", "age": "0세 이상", "host": "인천광역시교육청평생학습관", "tel": "문화예술팀 032-899-1516", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13762", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "매직퍼포먼스 <더 홀릭>", "kind": "공연", "cat": "아동", "place": "인천어린이과학관", "start": "2026-08-17", "end": "2026-09-27", "time": "주말/공휴일( 1회:11:00~12:00 , 2회:14:00~15:00 ) , 8월 17일(월) 14시, 16시 공연 운영", "age": "2세 이상", "host": "하늘자전거, 주식회사 수이앤엠", "tel": "02-353-2505", "price_won": 35000, "price_min": 35000, "price_raw": "유료 (- 정가 : 35,000원 - 조기예매할인 : 8월 9일까지 예매시 / 할인율 58% - 릴레이 할인(2인 이상/누구나) / 할인기간 : 상시 할인 / 할인율 55% - 뭉치면 할인(3인 이상 누구나) / 할인기간 : 상시할인 / 할인율 58% - 다둥이카드소지자, 장애인, 국가유공자할인 / 할인기간 : 상시할인 / 할인율 58% - 카카오톡 플러스 친구할인 / 할인기간 : 상시할인 / 할인율 60% - 굿즈 패키지할인 / 할인기간 : 상시할인 / 할인율 47% - 굿즈 패키지할인 / 할인기간 : 상시할인 / 할인율 34%)", "bucket": "3만원 초과", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13737", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "어린이 패션 프로젝트 <사계지장>", "kind": "교육/체험", "cat": "교육", "place": "지읒아트스튜디오", "start": "2026-06-25", "end": "2026-09-29", "time": "평일( 1회:15:30~18:30 ) , 주말/공휴일( 1회:10:00~13:00 )", "age": "12세 이상", "host": "이미지루덴스", "tel": "01021330677", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13653", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 <신바람 동네책방 책담회>", "kind": "행사/축제", "cat": "문화행사", "place": "인천 28개 동네책방", "start": "2026-03-28", "end": "2026-09-30", "time": "", "age": "10세 이상", "host": "인천문화재단 한국근대문학관", "tel": "032) 773-3801", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13556", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "트라이보울 기획전시 <김범수×이탈 2인전: 행복의 나라로>", "kind": "전시", "cat": "복합", "place": "트라이보울 전시장", "start": "2026-07-17", "end": "2026-09-30", "time": "", "age": "0세 이상", "host": "인천경제자유구역청, 인천문화재단, 트라이보울", "tel": "032-833-5992", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13716", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "제3회 인천광역시 사회연대경제 박람회", "kind": "행사/축제", "cat": "박람회", "place": "1883개항광장", "start": "2026-10-02", "end": "2026-10-03", "time": "평일( 1회:10:00~18:00 ) , 주말/공휴일( 1회:10:00~18:00 )", "age": "0세 이상", "host": "인천광역시 / 인천광역시사회적경제지원센터", "tel": "032-468-5432(운영사)", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13772", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "제26회 소래포구축제 - 소래에서 놀래", "kind": "행사/축제", "cat": "축제", "place": "소래포구 일원(해오름광장 및 소래포구 관광벨트)", "start": "2026-10-02", "end": "2026-10-04", "time": "평일( 1회:09:00~21:00 ) , 주말/공휴일( 1회:09:00~21:00 , 2회:09:00~21:00 )", "age": "0세 이상", "host": "인천광역시 남동구/(재)남동문화재단", "tel": "070-8820-4038", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13782", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "낭만주의 거장 차이코프스키 & 라흐마니노프", "kind": "공연", "cat": "클래식", "place": "인천학생교육문화회관 싸리재홀(대공연장)", "start": "2026-10-10", "end": "2026-10-10", "time": "평일( 1회:14:00~15:20 ) , 주말/공휴일( 1회:16:00~18:00 )", "age": "7세 이상", "host": "인천광역시교육청학생교육문화회관", "tel": "032-760-3532", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13797", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[투어프렌즈] 총총총 미래도시 송도 탐험 도보투어", "kind": "교육/체험", "cat": "기타", "place": "G타워전망대", "start": "2026-06-27", "end": "2026-10-17", "time": "", "age": "5세 이상", "host": "인천광역시 / 인천관광공사", "tel": "032-468-5432 (운영사)", "price_won": 10000, "price_min": 10000, "price_raw": "유료 (1인 10,000원)", "bucket": "1만원 이하", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13704", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[창작집단도르리] <심술장이 : 담다> 참여자 모집", "kind": "교육/체험", "cat": "교육", "place": "문화예술창작공간도르리", "start": "2026-07-04", "end": "2026-10-17", "time": "", "age": "10세 이상", "host": "창작집단도르리", "tel": "032)765-1969", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13675", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 여름 도시실험<가정동의 여름방학> 생활동행단 모집", "kind": "기타", "cat": "기타", "place": "가정1동·가정2동 일대", "start": "2026-07-18", "end": "2026-10-17", "time": "", "age": "0세 이상", "host": "꿈꾸는소.행.성", "tel": "꿈꾸는소.행.성 탐험지기 010-6223-3990 / 마음지기 010-9641-0929", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13714", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[투어프렌즈] 맛따라, 썰따라 도보투어", "kind": "교육/체험", "cat": "기타", "place": "하버파크호텔", "start": "2026-06-28", "end": "2026-10-18", "time": "", "age": "5세 이상", "host": "인천광역시 / 인천관광공사", "tel": "032-468-5432 (운영사)", "price_won": 10000, "price_min": 10000, "price_raw": "유료 (1인 10,000원)", "bucket": "1만원 이하", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13703", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "인천아트플랫폼 기획전시 – 인천미술 올해의 작가 차기율 개인전 《화해기 和海記 Hwahaegi: Reconciling with the Sea》", "kind": "전시", "cat": "기타", "place": "인천아트플랫폼 B동 갤러리", "start": "2026-08-13", "end": "2026-10-18", "time": "", "age": "0세 이상", "host": "인천아트플랫폼", "tel": "인천아트플랫폼 032-760-1000", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13731", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "ASAC 제작공연 연극 <레오폴트슈타트>", "kind": "공연", "cat": "기획공연", "place": "달맞이극장", "start": "2026-10-16", "end": "2026-10-19", "time": "", "age": "중학생 이상 관람가", "host": "안산문화재단", "tel": "고객지원센터 080-481-4000", "price_won": 30000, "price_min": 30000, "price_raw": "전석 3만원", "bucket": "1~3만원", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=42", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "인천국악회관 기획공연 (소)통하는 (금)요일 국악렉처콘서트 - 첫번째 이야기 아트컴퍼니 노드 Play in The 樂", "kind": "공연", "cat": "국악/판소리", "place": "국악회관 공연장", "start": "2026-04-24", "end": "2026-10-23", "time": "", "age": "6세 이상", "host": "인천국악회관", "tel": "032-876-8364", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13574", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 수봉IN기획공연 시리즈", "kind": "공연", "cat": "기타", "place": "인천수봉문화회관 소극장", "start": "2026-05-09", "end": "2026-10-24", "time": "주말/공휴일( 1회:15:00~16:00 )", "age": "0세 이상", "host": "인천수봉문화회관", "tel": "032 -868-7196", "price_won": 20000, "price_min": 20000, "price_raw": "유료 (● 좌석은 전석 20,000원입니다. - 수봉문화회관 관극회원 50%. (할인은 수봉문화회관 홈페이지 가입 시에만 제공되며, 현장에서 관극회원 여부 확인합니다.) ● 현장 판매 티켓은 당일 입장 가능한 티켓에 한하여 판매됩니다.)", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13623", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[국립인천해양박물관 X 인하대학교 한국학연구소] 해양도시 인천의 인문학 여행", "kind": "교육/체험", "cat": "교육", "place": "국립인천해양박물관", "start": "2026-09-05", "end": "2026-10-24", "time": "주말/공휴일( 1회:14:30~16:30 , 2회:14:30~16:30 , 3회:14:30~16:30 , 4회:14:30~16:30 )", "age": "13세 이상", "host": "국립인천해양박물관/인하대학교한국학연구소", "tel": "국립인천해양박물관 교육부 032-456-8870", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13757", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "인천 영화 주간 2026 <우리는 서로의 미래다>", "kind": "행사/축제", "cat": "문화행사", "place": "CGV인천연수 (스퀘어원 4층)", "start": "2026-10-23", "end": "2026-10-25", "time": "주말/공휴일( 1회:10:00~22:00 ) , 자세한 상영시간표는 10월 중 인천 영화 주간 홈페이지에서 확인", "age": "0세 이상", "host": "인천광역시/인천광역시영상위원회", "tel": "인천영상위원회 032-435-7172", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13756", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "MY LITTLE FOREST", "kind": "전시", "cat": "회화", "place": "오솔갤러리", "start": "2026-09-01", "end": "2026-10-27", "time": "", "age": "5세 이상", "host": "이상민", "tel": "010 6433 0622", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13798", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "구자범의 가을 콘서트 렉쳐 1) The Sound of Music", "kind": "공연", "cat": "기획공연", "place": "별무리극장", "start": "2026-10-28", "end": "2026-10-28", "time": "", "age": "8세 이상", "host": "안산문화재단", "tel": "080-481-4000", "price_won": 30000, "price_min": 30000, "price_raw": "전석 30,000원", "bucket": "1~3만원", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=61", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "2026멍때림 실내악시리즈", "kind": "공연", "cat": "클래식", "place": "멍때림 연주홀", "start": "2026-04-11", "end": "2026-10-31", "time": "주말/공휴일( 1회:14:00~14:30 ) , 토요일 오후 2시~2시30분", "age": "7세 이상", "host": "멍때림문화공간/멍때림 연주홀", "tel": "01042759280", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13630", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "토요일에 같이 놀 사람 구함", "kind": "행사/축제", "cat": "문화행사", "place": "용현동 아리마을 양지탕", "start": "2026-08-29", "end": "2026-10-31", "time": "주말/공휴일( 1회:13:00~16:00 , 2회:13:00~16:00 , 3회:13:00~16:00 , 4회:13:00~16:00 , 5회:13:00~16:00 , 6회:13:00~16:00 , 7회:13:00~16:00 , 8회:13:00~16:00 )", "age": "15세 이상", "host": "개미구경", "tel": "문의전화 : 010-4050-1753 / 인스타그램 : gaemi.gg", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13784", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026 부평 특성화 문화예술교육 <예술교육랩> 참여자 모집", "kind": "교육/체험", "cat": "교육", "place": "부평생활문화센터 공감168", "start": "2026-09-12", "end": "2026-10-31", "time": "", "age": "0세 이상", "host": "(재)부평구문화재단", "tel": "문화예술교육팀", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13796", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2026년 <전통 혼례식> 참가자 모집", "kind": "행사/축제", "cat": "문화행사", "place": "원인재", "start": "2026-11-07", "end": "2026-11-07", "time": "", "age": "0세 이상", "host": "연수구/연수문화원", "tel": "032-821-6229", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13786", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "율목도서관 2026년 길 위의 인문학", "kind": "교육/체험", "cat": "교육", "place": "율목도서관 소극장", "start": "2026-09-01", "end": "2026-11-12", "time": "평일( 1회:19:00~21:00 )", "age": "14세 이상", "host": "문화체육관광부/한국문화예술교육진흥원·한국도서관협회", "tel": "032-770-3800", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13752", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "렉처 퍼포먼스 <삶을 연극으로>", "kind": "교육/체험", "cat": "교육", "place": "인천대학교 평생교육원", "start": "2026-09-01", "end": "2026-11-13", "time": "평일( 1회:15:00~18:00 )", "age": "20세 이상", "host": "인천대학교 평생교육원", "tel": "032-835-9561", "price_won": 50000, "price_min": 50000, "price_raw": "유료 (11회차 총 50,000원)", "bucket": "3만원 초과", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13726", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "마음을 움직이는 배리어프리", "kind": "교육/체험", "cat": "교육", "place": "인천대학교 평생교육원", "start": "2026-09-29", "end": "2026-11-14", "time": "", "age": "20세 이상", "host": "인천대학교 평생교육원", "tel": "032-835-9561", "price_won": 20000, "price_min": 20000, "price_raw": "유료 (20,000원)", "bucket": "1~3만원", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13759", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "[김홍도 오감화] 체험교육", "kind": "교육/체험", "cat": "교육·행사", "place": "김홍도미술관 상상미술공장 교육실", "start": "2026-07-18", "end": "2026-11-21", "time": "토요일 2시", "age": "초등학교 3~6학년", "host": "안산문화재단", "tel": "", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://www.ansanart.com/lay2/program/S1T32C336/np_edu/intro.do", "source": "안산문화재단 교육/행사", "status": "신청마감"}, {"city": "안산", "title": "구자범의 가을 콘서트 렉쳐 2) The Sound of Silence", "kind": "공연", "cat": "기획공연", "place": "별무리극장", "start": "2026-11-25", "end": "2026-11-25", "time": "", "age": "8세 이상", "host": "안산문화재단", "tel": "080-481-4000", "price_won": 30000, "price_min": 30000, "price_raw": "전석 30,000원", "bucket": "1~3만원", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=62", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "2026년 수봉 ART:LAB - AI부터 사진, 어반스케치까지! 나도 아트 크리에이터!", "kind": "교육/체험", "cat": "교육", "place": "인천수봉문화회관", "start": "2026-07-18", "end": "2026-11-26", "time": "", "age": "11세 이상", "host": "인천수봉문화회관", "tel": "032 -868-7196", "price_won": 10000, "price_min": 10000, "price_raw": "유료 (1기,2기 : 10,000원 / 3기 : 12,000원)", "bucket": "1만원 이하", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13672", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[연수문화원] 캡컷 숏폼 영상전문가 2급 자격증과정 참가자 모집", "kind": "교육/체험", "cat": "교육", "place": "연수문화원 미디어강좌실", "start": "2026-10-08", "end": "2026-11-26", "time": "", "age": "20세 이상", "host": "연수구/연수문화원", "tel": "032-821-6229", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13760", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "ASAC 청소년 연극 <유원>", "kind": "공연", "cat": "기획공연", "place": "달맞이극장", "start": "2026-11-26", "end": "2026-11-27", "time": "", "age": "12세 이상 관람가(2014년생 이상)", "host": "안산문화재단", "tel": "고객지원센터 080-481-4000", "price_won": 40000, "price_min": 30000, "price_raw": "1층 4만원, 2층 3만원", "bucket": "3만원 초과", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=22", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "2026 문화예술교육 매개자 네트워크 「모닥」", "kind": "세미나/포럼", "cat": "기타", "place": "부평생활문화센터 공감168", "start": "2026-08-20", "end": "2026-12-10", "time": "", "age": "0세 이상", "host": "(재)부평구문화재단", "tel": "문화예술교육팀", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13741", "source": "인천문화포털 IQ", "status": ""}, {"city": "안산", "title": "안산시립국악단 기획연주회 2026 목요보노음악회", "kind": "공연", "cat": "공동기획", "place": "보노마루", "start": "2026-05-21", "end": "2026-12-17", "time": "", "age": "만 7세 이상", "host": "안산문화재단", "tel": "예매문의 NOL티켓 1544-1555, 고객지원센터 080-481-4000 / 공연문의 소극장보노마루 031-481-0571", "price_won": 5000, "price_min": 5000, "price_raw": "전석 5,000원", "bucket": "1만원 이하", "url": "https://www.ansanart.com/lay2/program/S1T10C334/show/view.do?sh_no=35", "source": "안산문화재단", "status": ""}, {"city": "안산", "title": "접근성 강화 프로그램 <김홍도 오감화>", "kind": "전시", "cat": "기획전시", "place": "김홍도미술관 상상미술공장", "start": "2026-06-30", "end": "2026-12-20", "time": "", "age": "", "host": "안산문화재단", "tel": "031-481-0506", "price_won": null, "price_min": null, "price_raw": "관람료 확인 필요", "bucket": "확인필요", "url": "https://www.ansanart.com/lay1/program/S1T200C28/exhibit/intro.do", "source": "안산문화재단", "status": ""}, {"city": "인천", "title": "스테이지엠 크리스마스 영화음악 & 캐롤 콘서트 2026 - 인천", "kind": "공연", "cat": "클래식", "place": "아트센터인천", "start": "2026-12-25", "end": "2026-12-25", "time": "주말/공휴일( 1회:15:30~17:00 )", "age": "5세 이상", "host": "스테이지 M(스테이지엠)", "tel": "0507-1338-4810", "price_won": 40000, "price_min": 40000, "price_raw": "유료 (전석 4만 원)", "bucket": "3만원 초과", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13789", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "2025년 인천도시역사관 어린이 특별전 <가자! 갯벌도시>", "kind": "전시", "cat": "복합", "place": "인천도시역사관 3층 어린이 전시실", "start": "2025-12-09", "end": "2026-12-31", "time": "", "age": "7세 이상", "host": "인천도시역사관", "tel": "032.850.6000", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13495", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "[인천아트플랫폼] 2026 예술교육 학교연계 프로그램", "kind": "교육/체험", "cat": "교육", "place": "인천아트플랫폼", "start": "2026-03-12", "end": "2026-12-31", "time": "평일( 1회:10:00~17:00 )", "age": "4세 이상", "host": "인천아트플랫폼", "tel": "032-760-1016", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13673", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "집", "kind": "전시", "cat": "복합", "place": "공간 듬", "start": "2026-05-15", "end": "2026-12-31", "time": "평일( 1회:13:00~19:00 ) , 주말/공휴일( 1회:13:00~19:00 ) , 월, 화 휴관", "age": "7세 이상", "host": "공간 듬", "tel": "daggdum@naver.com", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13619", "source": "인천문화포털 IQ", "status": ""}, {"city": "인천", "title": "인천관련 노래발굴 - 발굴 음원 소개", "kind": "기타", "cat": "기타", "place": "유튜브 음원링크", "start": "2026-06-16", "end": "2026-12-31", "time": "", "age": "0세 이상", "host": "인천콘서트챔버, (사)인천음악콘텐츠협회", "tel": "https://www.youtube.com/@incheonconcertchamber648", "price_won": 0, "price_min": 0, "price_raw": "무료", "bucket": "무료", "url": "https://ifac.or.kr/culturalInfo/cuturalEvents/performanceSrch/view.do?key=m2501152621396&eventSn=13667", "source": "인천문화포털 IQ", "status": ""}]}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var ITEMS = D.items, TODAY = D.today;
+  document.getElementById('stamp').textContent = D.generated + ' 기준 · ' + ITEMS.length + '건';
+
+  var BUCKETS = ['무료','1만원 이하','1~3만원','3만원 초과','확인필요'];
+  var BCLASS = {'무료':'b0','1만원 이하':'b1','1~3만원':'b2','3만원 초과':'b3','확인필요':''};
+  var KINDS = [];
+  ITEMS.forEach(function(i){ var k = norm(i.kind); if(KINDS.indexOf(k)<0) KINDS.push(k); });
+  function norm(k){
+    if(!k) return '기타';
+    if(/공연|음악|연극|콘서트/.test(k)) return '공연';
+    if(/전시/.test(k)) return '전시';
+    if(/교육|체험|강좌/.test(k)) return '교육·체험';
+    if(/축제|행사/.test(k)) return '축제·행사';
+    if(/영화/.test(k)) return '영화';
+    return '기타';
+  }
+  KINDS.sort();
+
+  var S = {city:'전체', price:'전체', kind:'전체', q:'', sort:'end'};
+  try{ var saved = JSON.parse(localStorage.getItem('haengsa')||'{}');
+       Object.keys(saved).forEach(function(k){ if(k in S) S[k]=saved[k]; }); }catch(e){}
+  function save(){ try{ localStorage.setItem('haengsa', JSON.stringify(S)); }catch(e){} }
+
+  function mkChips(box, key, vals, cls){
+    vals.forEach(function(v){
+      var b = document.createElement('button');
+      b.type='button'; b.className='chip'+(cls&&cls[v]?' '+cls[v]:'');
+      b.textContent = v; b.setAttribute('aria-pressed', S[key]===v);
+      b.onclick = function(){ S[key]=v; save(); paint(); };
+      box.appendChild(b);
+    });
+  }
+  var cityBox=document.getElementById('cityChips'), priceBox=document.getElementById('priceChips'), kindBox=document.getElementById('kindChips');
+  mkChips(cityBox,'city',['전체','인천','안산'],{'인천':'ic','안산':'an'});
+  mkChips(priceBox,'price',['전체'].concat(BUCKETS),{'무료':'free'});
+  var kindTail = document.getElementById('count');
+  mkChips(kindBox,'kind',['전체'].concat(KINDS));
+  kindBox.appendChild(kindTail);
+
+  var q=document.getElementById('q'); q.value=S.q;
+  q.oninput=function(){ S.q=q.value; save(); paint(); };
+  var sortSel=document.getElementById('sort'); sortSel.value=S.sort;
+  sortSel.onchange=function(){ S.sort=sortSel.value; save(); paint(); };
+
+  function won(n){ return n.toLocaleString('ko-KR')+'원'; }
+  function dday(endStr){
+    if(!endStr) return null;
+    var a=new Date(TODAY+'T00:00'), b=new Date(endStr+'T00:00');
+    return Math.round((b-a)/86400000);
+  }
+  function fmt(s){
+    if(!s) return {md:'날짜미정', yr:''};
+    var p=s.split('-');
+    return {md:p[1]+'/'+p[2], yr:p[0]};
+  }
+
+  function stats(){
+    var box=document.getElementById('stats');
+    var free=ITEMS.filter(function(i){return i.bucket==='무료';}).length;
+    var ic=ITEMS.filter(function(i){return i.city==='인천';}).length;
+    var an=ITEMS.filter(function(i){return i.city==='안산';}).length;
+    var wk=ITEMS.filter(function(i){var d=dday(i.end); return d!==null && d>=0 && d<=7;}).length;
+    var rows=[['전체',ITEMS.length,''],['무료',free,'free'],['인천',ic,'ic'],['안산',an,'an'],['7일 내 마감',wk,'']];
+    box.innerHTML = rows.map(function(r){
+      return '<div class="stat '+r[2]+'"><span class="n">'+r[1]+'</span><span class="k">'+r[0]+'</span></div>';
+    }).join('');
+  }
+
+  function paint(){
+    [[cityBox,'city'],[priceBox,'price'],[kindBox,'kind']].forEach(function(p){
+      p[0].querySelectorAll('.chip').forEach(function(b){
+        b.setAttribute('aria-pressed', b.textContent===S[p[1]]);
+      });
+    });
+    var qq=S.q.trim().toLowerCase();
+    var out=ITEMS.filter(function(i){
+      if(S.city!=='전체' && i.city!==S.city) return false;
+      if(S.price!=='전체' && i.bucket!==S.price) return false;
+      if(S.kind!=='전체' && norm(i.kind)!==S.kind) return false;
+      if(qq && (i.title+' '+i.place+' '+i.host).toLowerCase().indexOf(qq)<0) return false;
+      return true;
+    });
+    var big=99999999;
+    out.sort(function(a,b){
+      if(S.sort==='end') return (a.end||'9999').localeCompare(b.end||'9999');
+      if(S.sort==='start') return (a.start||'9999').localeCompare(b.start||'9999');
+      var pa=a.price_won==null?big:a.price_won, pb=b.price_won==null?big:b.price_won;
+      return S.sort==='cheap' ? pa-pb : (pb===big?-1:pa===big?1:pb-pa);
+    });
+    document.getElementById('count').textContent = out.length+' / '+ITEMS.length+'건';
+
+    var L=document.getElementById('list');
+    if(!out.length){ L.innerHTML='<li class="empty">조건에 맞는 행사가 없어. 필터를 풀어봐.</li>'; return; }
+    L.innerHTML = out.map(function(i){
+      var cc=i.city==='인천'?'ic':'an';
+      var running = i.start && i.start<=TODAY && (!i.end || i.end>=TODAY);
+      var key = running ? (i.end||i.start) : (i.start||i.end);
+      var f=fmt(key), ddTxt='', ddCls='';
+      if(running){
+        var de=dday(i.end);
+        if(de===0){ddTxt='오늘 마감';ddCls='soon';}
+        else if(de!==null && de<=7){ddTxt='D-'+de+' 마감';ddCls='soon';}
+        else {ddTxt='진행중';ddCls='now';}
+      }else{
+        var dsx=dday(i.start);
+        if(dsx!==null && dsx>=0) ddTxt = dsx===0 ? '오늘 시작' : 'D-'+dsx;
+      }
+      var tag = i.bucket==='무료' ? '무료'
+              : i.bucket==='확인필요' ? '확인필요'
+              : won(i.price_won);
+      var sub='';
+      if(i.price_min!=null && i.price_won!=null && i.price_min<i.price_won) sub='할인 시 '+won(i.price_min)+'부터';
+      else if(i.bucket==='확인필요' && i.price_raw && i.price_raw!=='정보없음') sub=i.price_raw.slice(0,26);
+      var st = i.status ? '<span class="status'+(i.status==='모집중'?' open':'')+'">'+i.status+'</span>' : '';
+      var range = i.start && i.end && i.start!==i.end ? (i.start.slice(5).replace('-','.')+'~'+i.end.slice(5).replace('-','.')) : '';
+      return '<li class="row '+cc+'">'
+        +'<div class="when"><span class="md">'+f.md+'</span><span class="yr">'+f.yr+'</span>'
+        + (ddTxt?'<span class="dday '+ddCls+'">'+ddTxt+'</span>':'') +'</div>'
+        +'<div class="main"><p class="t"><a href="'+i.url+'" target="_blank" rel="noopener">'+esc(i.title)+'</a></p>'
+        +'<div class="meta"><span class="city '+cc+'">'+i.city+'</span>'
+        + (i.place?'<span>'+esc(i.place)+'</span>':'')
+        + (range?'<span>'+range+'</span>':'')
+        + '<span>'+norm(i.kind)+'</span></div>'+st+'</div>'
+        +'<div class="price"><span class="tag '+BCLASS[i.bucket]+'">'+tag+'</span>'
+        + (sub?'<div class="sub">'+esc(sub)+'</div>':'') +'</div>'
+      +'</li>';
+    }).join('');
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  stats(); paint();
+})();
+</script>
+</body>
+</html>
